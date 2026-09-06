@@ -8,6 +8,7 @@
 <body class="bg-gray-100 font-sans text-gray-800 p-4 md:p-8">
 
   <div class="max-w-7xl mx-auto bg-white rounded-xl shadow-md p-6">
+    <!-- Header App & Navigasi -->
     <div class="flex flex-col md:flex-row justify-between items-center pb-6 border-b mb-6 gap-4">
       <div>
         <h1 class="text-2xl font-bold text-gray-900">Sistem Inventaris INVIVO</h1>
@@ -28,10 +29,11 @@
 
     <div id="alert-box" class="hidden mb-6 p-4 rounded-lg text-sm font-medium"></div>
 
+    <!-- VIEW 1: OUTPUT / PEMAKAIAN & PENGISIAN STOK -->
     <div id="view-output" class="block space-y-4">
       <div class="flex flex-col md:flex-row justify-between gap-3 bg-gray-50 p-4 rounded-xl border">
         <div class="flex-1">
-          <input type="text" id="table-search-input" onkeyup="filterAndRenderTable()" placeholder="Cari nama barang atau brand..." class="w-full p-2.5 border rounded-lg text-sm bg-white outline-none">
+          <input type="text" id="table-search-input" onkeyup="filterAndRenderTable()" placeholder="Cari nama barang (Items) atau brand..." class="w-full p-2.5 border rounded-lg text-sm bg-white outline-none">
         </div>
         <div class="flex items-center gap-2">
           <span class="text-xs font-semibold text-gray-600">Sortir:</span>
@@ -48,23 +50,25 @@
         <table class="w-full text-left text-sm text-gray-600">
           <thead class="bg-gray-50 text-gray-700 uppercase font-semibold text-xs border-b">
             <tr>
-              <th class="py-3 px-4">No</th>
-              <th class="py-3 px-4">Items</th>
-              <th class="py-3 px-4">Brand</th>
-              <th class="py-3 px-4">Quantity</th>
-              <th class="py-3 px-4">Unit</th>
-              <th class="py-3 px-4">Pakai / Rusak</th>
-              <th class="py-3 px-4">Jumlah & Keterangan</th>
-              <th class="py-3 px-4 text-center">Proses</th>
+              <th class="py-3 px-3">No</th>
+              <th class="py-3 px-3">Categories</th>
+              <th class="py-3 px-3">Items</th>
+              <th class="py-3 px-3">Brand</th>
+              <th class="py-3 px-3">Stock Sisa</th>
+              <th class="py-3 px-3">Unit</th>
+              <th class="py-3 px-3">Aksi / Tipe</th>
+              <th class="py-3 px-3">Jumlah & Keterangan</th>
+              <th class="py-3 px-3 text-center">Proses</th>
             </tr>
           </thead>
           <tbody id="table-stok-body" class="divide-y">
-            <tr><td colspan="8" class="text-center py-6 text-gray-400">Memuat data dari server...</td></tr>
+            <tr><td colspan="9" class="text-center py-6 text-gray-400">Memuat data dari server...</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
+    <!-- VIEW 2: PENGAJUAN BARANG BARU -->
     <div id="view-pengajuan" class="hidden space-y-8">
       <div class="p-5 bg-blue-50 border border-blue-200 rounded-xl">
         <h3 class="font-semibold text-blue-900 mb-2">Cek Inventaris Sebelum Pengajuan</h3>
@@ -77,18 +81,22 @@
 
       <div class="border p-5 rounded-xl space-y-4">
         <h3 class="font-semibold text-gray-800 text-base">Form Pengajuan Barang Baru</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Categories</label>
+            <input type="text" id="form-category" placeholder="Cth: Fungisida / Tool" class="w-full p-2.5 border rounded-lg text-sm outline-none">
+          </div>
           <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Items</label>
-            <input type="text" id="form-items" class="w-full p-2.5 border rounded-lg text-sm outline-none">
+            <input type="text" id="form-items" placeholder="Nama Barang" class="w-full p-2.5 border rounded-lg text-sm outline-none">
           </div>
           <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Brand</label>
-            <input type="text" id="form-brand" class="w-full p-2.5 border rounded-lg text-sm outline-none">
+            <input type="text" id="form-brand" placeholder="Merk / Brand" class="w-full p-2.5 border rounded-lg text-sm outline-none">
           </div>
           <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Qty</label>
-            <input type="number" id="form-qty" class="w-full p-2.5 border rounded-lg text-sm outline-none">
+            <input type="number" id="form-qty" placeholder="0" class="w-full p-2.5 border rounded-lg text-sm outline-none">
           </div>
         </div>
         <div class="w-1/3">
@@ -102,14 +110,14 @@
       </div>
 
       <div class="border rounded-xl p-5 space-y-4">
-        <h3 class="font-semibold text-gray-800">Daftar Item Pengajuan</h3>
+        <h3 class="font-semibold text-gray-800">Daftar Item Yang Akan Diajukan</h3>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-sm">
             <thead class="bg-gray-50 border-b text-xs uppercase text-gray-600">
-              <tr><th class="py-2 px-3">No</th><th class="py-2 px-3">Items</th><th class="py-2 px-3">Brand</th><th class="py-2 px-3">Qty</th><th class="py-2 px-3">Unit</th><th class="py-2 px-3">Aksi</th></tr>
+              <tr><th class="py-2 px-3">No</th><th class="py-2 px-3">Category</th><th class="py-2 px-3">Items</th><th class="py-2 px-3">Brand</th><th class="py-2 px-3">Qty</th><th class="py-2 px-3">Unit</th><th class="py-2 px-3">Aksi</th></tr>
             </thead>
             <tbody id="request-list-body" class="divide-y">
-              <tr><td colspan="6" class="text-center py-4 text-gray-400">Belum ada barang ditambahkan.</td></tr>
+              <tr><td colspan="7" class="text-center py-4 text-gray-400">Belum ada barang ditambahkan.</td></tr>
             </tbody>
           </table>
         </div>
@@ -117,12 +125,40 @@
           <button id="btn-submit-pengajuan" onclick="submitAllPengajuan()" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow">Kirim Pengajuan</button>
         </div>
       </div>
+
+      <!-- RIWAYAT PENGAJUAN BARANG BARU -->
+      <div class="border rounded-xl p-5 space-y-4 bg-gray-50 mt-8">
+        <div class="flex justify-between items-center">
+          <h3 class="font-bold text-gray-900 text-base">Riwayat & Status Pengajuan Barang Baru</h3>
+          <button onclick="loadPengajuanHistory()" class="text-xs bg-white border px-3 py-1.5 rounded-lg shadow-sm hover:bg-gray-100 font-semibold">Refresh Status</button>
+        </div>
+        <div class="overflow-x-auto bg-white rounded-lg border">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-gray-100 border-b text-xs uppercase text-gray-700">
+              <tr>
+                <th class="py-2.5 px-3">No</th>
+                <th class="py-2.5 px-3">Tanggal</th>
+                <th class="py-2.5 px-3">Category</th>
+                <th class="py-2.5 px-3">Items</th>
+                <th class="py-2.5 px-3">Brand</th>
+                <th class="py-2.5 px-3">Qty</th>
+                <th class="py-2.5 px-3">Unit</th>
+                <th class="py-2.5 px-3 text-center">Status</th>
+              </tr>
+            </thead>
+            <tbody id="history-list-body" class="divide-y">
+              <tr><td colspan="8" class="text-center py-4 text-gray-400">Memuat riwayat pengajuan...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
+    <!-- VIEW 3: DAFTAR BARANG RUSAK & RIWAYATNYA -->
     <div id="view-rusak" class="hidden space-y-8">
       <div class="p-5 bg-amber-50 border border-amber-200 rounded-xl">
         <h3 class="font-semibold text-amber-900 mb-1">Daftar Pengajuan Barang Rusak / Afkir</h3>
-        <p class="text-xs text-amber-700">Daftar barang di bawah ini dikumpulkan dari pilihan "Rusak" pada tabel stok utama. Tekan tombol kirim untuk mencatat ke Spreadsheet Afkir.</p>
+        <p class="text-xs text-amber-700">Daftar barang di bawah ini dikumpulkan dari pilihan "Rusak" pada tabel stok utama sebelum dikirim.</p>
       </div>
 
       <div class="border rounded-xl p-5 space-y-4">
@@ -137,17 +173,46 @@
                 <th class="py-2 px-3">Unit</th>
                 <th class="py-2 px-3">Est. Harga Satuan</th>
                 <th class="py-2 px-3">Total Est.</th>
-                <th class="py-2 px-3">Keterangan</th>
+                <th class="py-2 px-3">Keterangan / Alasan</th>
                 <th class="py-2 px-3">Aksi</th>
               </tr>
             </thead>
             <tbody id="rusak-list-body" class="divide-y">
-              <tr><td colspan="9" class="text-center py-4 text-gray-400">Belum ada barang rusak yang diajukan. Silakan pilih dari menu Stok & Pemakaian.</td></tr>
+              <tr><td colspan="9" class="text-center py-4 text-gray-400">Belum ada barang rusak yang dipilih. Silakan pilih dari menu Stok & Pemakaian.</td></tr>
             </tbody>
           </table>
         </div>
         <div class="flex justify-end pt-3">
           <button id="btn-submit-rusak" onclick="submitAllBarangRusak()" class="bg-amber-600 text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow">Kirim Pengajuan Barang Rusak</button>
+        </div>
+      </div>
+
+      <!-- RIWAYAT & STATUS BARANG RUSAK (DARI TSA AFKIR) -->
+      <div class="border rounded-xl p-5 space-y-4 bg-gray-50 mt-8">
+        <div class="flex justify-between items-center">
+          <h3 class="font-bold text-gray-900 text-base">Riwayat & Status Pengajuan Barang Rusak / Afkir</h3>
+          <button onclick="loadAfkirHistory()" class="text-xs bg-white border px-3 py-1.5 rounded-lg shadow-sm hover:bg-gray-100 font-semibold">Refresh Status</button>
+        </div>
+        <div class="overflow-x-auto bg-white rounded-lg border">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-gray-100 border-b text-xs uppercase text-gray-700">
+              <tr>
+                <th class="py-2.5 px-3">No</th>
+                <th class="py-2.5 px-3">Tanggal</th>
+                <th class="py-2.5 px-3">Category</th>
+                <th class="py-2.5 px-3">Items</th>
+                <th class="py-2.5 px-3">Brand</th>
+                <th class="py-2.5 px-3">Qty</th>
+                <th class="py-2.5 px-3">Unit</th>
+                <th class="py-2.5 px-3">Total Price</th>
+                <th class="py-2.5 px-3">Keterangan</th>
+                <th class="py-2.5 px-3 text-center">Status</th>
+              </tr>
+            </thead>
+            <tbody id="afkir-history-list-body" class="divide-y">
+              <tr><td colspan="10" class="text-center py-4 text-gray-400">Memuat riwayat barang rusak...</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -157,13 +222,17 @@
     // ----------------------------------------------------------------------
     // PENTING: GANTI DENGAN URL WEB APP APPS SCRIPT ANDA
     // ----------------------------------------------------------------------
-    const API_URL = "https://script.google.com/macros/s/AKfycbysizx3QTpTlt2INUGP709qU2p9AFVSEL1ucS_tWSj0-Utn0VMQm-jW5OAMZAV7gM4/exec"; 
+    const API_URL = "https://script.google.com/macros/s/AKfycbykwBoAYOS3H58McwVXoXHev1pnuEobsPFEoyI2P3nDzU6gLqARSC5_UEwFt1my1Q/exec"; 
     
     let stockData = [];
     let pendingRequests = [];
     let pendingRusakRequests = [];
 
-    window.onload = () => loadStockData();
+    window.onload = () => {
+      loadStockData();
+      loadPengajuanHistory();
+      loadAfkirHistory();
+    };
 
     function showAlert(msg, isSuccess = true) {
       const box = document.getElementById('alert-box');
@@ -206,13 +275,9 @@
         (item.brand || '').toLowerCase().includes(searchVal)
       );
 
-      if (sortVal === 'items-asc') {
-        filtered.sort((a, b) => a.items.localeCompare(b.items));
-      } else if (sortVal === 'items-desc') {
-        filtered.sort((a, b) => b.items.localeCompare(a.items));
-      } else if (sortVal === 'brand-asc') {
-        filtered.sort((a, b) => a.brand.localeCompare(b.brand));
-      }
+      if (sortVal === 'items-asc') filtered.sort((a, b) => a.items.localeCompare(b.items));
+      else if (sortVal === 'items-desc') filtered.sort((a, b) => b.items.localeCompare(a.items));
+      else if (sortVal === 'brand-asc') filtered.sort((a, b) => a.brand.localeCompare(b.brand));
 
       renderStockTable(filtered);
     }
@@ -220,51 +285,47 @@
     function renderStockTable(items) {
       const tbody = document.getElementById('table-stok-body');
       if (!items || items.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" class="text-center py-6 text-gray-400">Tidak ada data ditemukan.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="9" class="text-center py-6 text-gray-400">Tidak ada data ditemukan.</td></tr>';
         return;
       }
       
       tbody.innerHTML = items.map((item) => {
         const dbUnit = (item.unit || '').toLowerCase();
         let unitOptionsHtml = '';
-
-        if (dbUnit.includes('gram') || dbUnit === 'gr' || dbUnit === 'g') {
-          unitOptionsHtml = `<option value="gram" selected>gram</option><option value="Kilogram">Kilogram</option>`;
-        } else if (dbUnit.includes('ml') || dbUnit.includes('mililiter')) {
-          unitOptionsHtml = `<option value="mililiter" selected>mililiter</option><option value="Liter">Liter</option>`;
-        } else if (dbUnit.includes('liter') || dbUnit === 'l') {
-          unitOptionsHtml = `<option value="Liter" selected>Liter</option><option value="mililiter">mililiter</option>`;
-        } else if (dbUnit.includes('kg') || dbUnit.includes('kilogram')) {
-          unitOptionsHtml = `<option value="Kilogram" selected>Kilogram</option><option value="gram">gram</option>`;
-        } else {
+        if (dbUnit.includes('gram') || dbUnit === 'gr' || dbUnit === 'g') unitOptionsHtml = `<option value="gram" selected>gram</option><option value="Kilogram">Kilogram</option>`;
+        else if (dbUnit.includes('ml') || dbUnit.includes('mililiter')) unitOptionsHtml = `<option value="mililiter" selected>mililiter</option><option value="Liter">Liter</option>`;
+        else if (dbUnit.includes('liter') || dbUnit === 'l') unitOptionsHtml = `<option value="Liter" selected>Liter</option><option value="mililiter">mililiter</option>`;
+        else if (dbUnit.includes('kg') || dbUnit.includes('kilogram')) unitOptionsHtml = `<option value="Kilogram" selected>Kilogram</option><option value="gram">gram</option>`;
+        else {
           const cleanUnit = item.unit || 'pcs';
           unitOptionsHtml = `<option value="${cleanUnit}" selected>${cleanUnit}</option><option value="pcs">pcs</option>`;
         }
 
         return `
           <tr class="hover:bg-gray-50 border-b">
-            <td class="py-3 px-4">${item.no}</td>
-            <td class="py-3 px-4 font-semibold">${item.items}</td>
-            <td class="py-3 px-4">${item.brand}</td>
-            <td class="py-3 px-4 font-bold ${item.quantity <= 0 ? 'text-red-500' : ''}" id="qty-${item.rowIndex}">${item.quantity}</td>
-            <td class="py-3 px-4 text-blue-600 font-medium">${item.unit}</td>
-            <td class="py-3 px-4">
+            <td class="py-3 px-3">${item.no}</td>
+            <td class="py-3 px-3 text-gray-500 text-xs font-medium">${item.category}</td>
+            <td class="py-3 px-3 font-semibold text-gray-800">${item.items}</td>
+            <td class="py-3 px-3">${item.brand || '-'}</td>
+            <td class="py-3 px-3 font-bold ${item.quantity <= 0 ? 'text-red-500' : 'text-gray-900'}" id="qty-${item.rowIndex}">${item.quantity}</td>
+            <td class="py-3 px-3 text-blue-600 font-medium">${item.unit}</td>
+            <td class="py-3 px-3">
               <select id="tipe-aksi-${item.rowIndex}" onchange="toggleAksiInput(${item.rowIndex})" class="p-1.5 border rounded text-xs bg-white font-semibold">
-                <option value="pakai">Pakai</option>
-                <option value="rusak">Rusak</option>
+                <option value="pakai">Pakai (Stok)</option>
+                <option value="rusak">Rusak (Afkir)</option>
               </select>
             </td>
-            <td class="py-3 px-4 space-y-1">
+            <td class="py-3 px-3 space-y-1">
               <div class="flex gap-1">
                 <input type="number" id="input-qty-${item.rowIndex}" placeholder="Qty" class="w-16 p-1 border rounded text-sm text-center">
                 <select id="unit-${item.rowIndex}" class="p-1 border rounded text-xs bg-white font-medium">
                   ${unitOptionsHtml}
                 </select>
               </div>
-              <input type="text" id="input-ket-${item.rowIndex}" placeholder="Keterangan kerusakan..." class="w-full p-1 border rounded text-xs hidden bg-amber-50">
+              <input type="text" id="input-ket-${item.rowIndex}" placeholder="Keterangan / Alasan Kerusakan..." class="w-full p-1 border rounded text-xs hidden bg-amber-50">
             </td>
-            <td class="py-3 px-4 text-center">
-              <button id="btn-conf-${item.rowIndex}" onclick="handleMainConfirm(${item.rowIndex}, '${item.items}', '${item.brand}', ${item.price})" class="bg-blue-600 text-white px-3 py-1.5 rounded text-xs font-semibold hover:bg-blue-700">Confirm</button>
+            <td class="py-3 px-3 text-center">
+              <button id="btn-conf-${item.rowIndex}" onclick="handleMainConfirm(${item.rowIndex}, '${item.items}', '${item.brand}', ${item.price}, '${item.category}')" class="bg-blue-600 text-white px-3 py-1.5 rounded text-xs font-semibold hover:bg-blue-700">Confirm</button>
             </td>
           </tr>
         `;
@@ -287,7 +348,7 @@
       }
     }
 
-    async function handleMainConfirm(rowIndex, itemsName, brandName, priceVal) {
+    async function handleMainConfirm(rowIndex, itemsName, brandName, priceVal, categoryVal) {
       const tipe = document.getElementById(`tipe-aksi-${rowIndex}`).value;
       const qtyVal = document.getElementById(`input-qty-${rowIndex}`).value;
       const unitVal = document.getElementById(`unit-${rowIndex}`).value;
@@ -295,7 +356,6 @@
       if (!qtyVal || Number(qtyVal) <= 0) return showAlert("Masukkan jumlah yang valid!", false);
 
       if (tipe === 'pakai') {
-        // Proses Pemakaian Stok Langsung
         const btn = document.getElementById(`btn-conf-${rowIndex}`);
         btn.disabled = true;
         btn.innerText = "Loading...";
@@ -312,7 +372,6 @@
           if (result.success) {
             showAlert(result.message, true);
             document.getElementById(`qty-${rowIndex}`).innerText = result.newQty;
-            // Update local stockData object
             const found = stockData.find(i => i.rowIndex === rowIndex);
             if(found) found.quantity = result.newQty;
             document.getElementById(`input-qty-${rowIndex}`).value = '';
@@ -326,7 +385,6 @@
         btn.innerText = "Confirm";
 
       } else {
-        // Proses Masuk ke List Barang Rusak / Afkir
         const ketVal = document.getElementById(`input-ket-${rowIndex}`).value;
         pendingRusakRequests.push({
           items: itemsName,
@@ -334,115 +392,30 @@
           quantity: qtyVal,
           unit: unitVal,
           price: priceVal,
+          category: categoryVal,
           keterangan: ketVal || '-'
         });
 
         renderRusakTable();
-        showAlert(`Berhasil menambahkan "${itemsName}" ke daftar barang rusak. Silakan cek tab "Daftar Barang Rusak".`, true);
+        showAlert(`Berhasil menambahkan "${itemsName}" ke daftar barang rusak.`, true);
         document.getElementById(`input-qty-${rowIndex}`).value = '';
         document.getElementById(`input-ket-${rowIndex}`).value = '';
       }
     }
 
-    function renderRusakTable() {
-      const tbody = document.getElementById('rusak-list-body');
-      if (!pendingRusakRequests.length) {
-        tbody.innerHTML = '<tr><td colspan="9" class="text-center py-4 text-gray-400">Belum ada barang rusak yang diajukan.</td></tr>';
-        return;
-      }
-      tbody.innerHTML = pendingRusakRequests.map((item, idx) => {
-        const total = Number(item.quantity) * Number(item.price);
-        return `
-          <tr class="border-b">
-            <td class="py-2.5 px-3">${idx + 1}</td>
-            <td class="py-2.5 px-3 font-semibold">${item.items}</td>
-            <td class="py-2.5 px-3">${item.brand||'-'}</td>
-            <td class="py-2.5 px-3 font-bold text-amber-600">${item.quantity}</td>
-            <td class="py-2.5 px-3">${item.unit}</td>
-            <td class="py-2.5 px-3">Rp ${Number(item.price).toLocaleString('id-ID')}</td>
-            <td class="py-2.5 px-3 font-bold text-gray-900">Rp ${total.toLocaleString('id-ID')}</td>
-            <td class="py-2.5 px-3 text-gray-600">${item.keterangan}</td>
-            <td class="py-2.5 px-3"><button onclick="removeItemFromRusak(${idx})" class="text-red-600 text-xs font-semibold">Hapus</button></td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function removeItemFromRusak(index) {
-      pendingRusakRequests.splice(index, 1);
-      renderRusakTable();
-    }
-
-    async function submitAllBarangRusak() {
-      const btn = document.getElementById('btn-submit-rusak');
-      if (!pendingRusakRequests.length) return showAlert("Daftar barang rusak masih kosong!", false);
-
-      btn.disabled = true;
-      btn.innerText = "Mengirim...";
-
-      try {
-        const payload = { 
-          action: 'submitBarangRusak', 
-          itemsList: pendingRusakRequests 
-        };
-        const res = await fetch(API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload)
-        });
-        const result = await res.json();
-
-        if (result.success) {
-          showAlert(result.message, true);
-          pendingRusakRequests = [];
-          renderRusakTable();
-        } else {
-          showAlert(result.message, false);
-        }
-      } catch (e) {
-        showAlert("Gagal mengirim pengajuan barang rusak.", false);
-      }
-      btn.disabled = false;
-      btn.innerText = "Kirim Pengajuan Barang Rusak";
-    }
-
-    async function performSearch() {
-      const q = document.getElementById('search-query').value;
-      const resDiv = document.getElementById('search-result');
-      const btn = document.getElementById('btn-search');
-      if (!q) return;
-
-      btn.disabled = true;
-      resDiv.innerHTML = '<span class="text-gray-500">Mencari...</span>';
-
-      try {
-        const res = await fetch(`${API_URL}?action=searchStock&query=${encodeURIComponent(q)}`);
-        const result = await res.json();
-        
-        if (result.found) {
-          let html = '<div class="p-3 bg-green-100 text-green-900 border border-green-200 rounded-lg"><strong>Ditemukan:</strong><ul class="mt-1 list-disc list-inside">';
-          result.items.forEach(i => html += `<li>${i.items} (${i.brand}) - Stok: <strong>${i.quantity} ${i.unit}</strong></li>`);
-          resDiv.innerHTML = html + '</ul></div>';
-        } else {
-          resDiv.innerHTML = '<div class="p-3 bg-amber-100 text-amber-900 border border-amber-200 rounded-lg">Barang tidak ditemukan di stok. Bisa diajukan.</div>';
-        }
-      } catch (e) {
-        resDiv.innerHTML = '<span class="text-red-500">Gagal mencari.</span>';
-      }
-      btn.disabled = false;
-    }
-
+    // --- PENGELOLAAN PENGAJUAN BARANG BARU ---
     function addItemToRequestList() {
+      const category = document.getElementById('form-category').value;
       const items = document.getElementById('form-items').value;
       const brand = document.getElementById('form-brand').value;
       const quantity = document.getElementById('form-qty').value;
       const unit = document.getElementById('form-unit').value;
 
-      if (!items || !quantity || Number(quantity) <= 0) return showAlert("Lengkapi form pengajuan dengan benar!", false);
+      if (!items || !quantity || Number(quantity) <= 0) return showAlert("Lengkapi nama barang dan quantity!", false);
       
-      pendingRequests.push({ items, brand, quantity, unit });
+      pendingRequests.push({ category, items, brand, quantity, unit });
       renderRequestTable();
-      ['form-items','form-brand','form-qty'].forEach(id => document.getElementById(id).value = '');
+      ['form-category','form-items','form-brand','form-qty'].forEach(id => document.getElementById(id).value = '');
     }
 
     function removeItemFromRequest(index) {
@@ -453,14 +426,15 @@
     function renderRequestTable() {
       const tbody = document.getElementById('request-list-body');
       if (!pendingRequests.length) {
-        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-gray-400">Belum ada barang ditambahkan.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-gray-400">Belum ada barang ditambahkan.</td></tr>';
         return;
       }
       tbody.innerHTML = pendingRequests.map((item, idx) => `
         <tr class="border-b">
           <td class="py-2.5 px-3">${idx + 1}</td>
-          <td class="py-2.5 px-3">${item.items}</td>
-          <td class="py-2.5 px-3">${item.brand||'-'}</td>
+          <td class="py-2.5 px-3 text-gray-600">${item.category || '-'}</td>
+          <td class="py-2.5 px-3 font-semibold">${item.items}</td>
+          <td class="py-2.5 px-3">${item.brand || '-'}</td>
           <td class="py-2.5 px-3 font-bold">${item.quantity}</td>
           <td class="py-2.5 px-3">${item.unit}</td>
           <td class="py-2.5 px-3"><button onclick="removeItemFromRequest(${idx})" class="text-red-600 text-xs font-semibold">Hapus</button></td>
@@ -488,6 +462,7 @@
           showAlert(result.message, true);
           pendingRequests = [];
           renderRequestTable();
+          loadPengajuanHistory();
         } else {
           showAlert(result.message, false);
         }
@@ -496,6 +471,174 @@
       }
       btn.disabled = false;
       btn.innerText = "Kirim Pengajuan";
+    }
+
+    async function loadPengajuanHistory() {
+      const tbody = document.getElementById('history-list-body');
+      try {
+        const res = await fetch(`${API_URL}?action=getPengajuanHistory`);
+        const textRes = await res.text();
+        const result = JSON.parse(textRes);
+
+        if (result.success && result.data.length > 0) {
+          tbody.innerHTML = result.data.map((h, i) => {
+            let statusColor = "bg-gray-100 text-gray-800";
+            const st = (h.status || '').toLowerCase();
+            if (st.includes('pending')) statusColor = "bg-amber-100 text-amber-800 border border-amber-200";
+            else if (st.includes('purchase')) statusColor = "bg-blue-100 text-blue-800 border border-blue-200";
+            else if (st.includes('receive')) statusColor = "bg-purple-100 text-purple-800 border border-purple-200";
+            else if (st.includes('delivered')) statusColor = "bg-emerald-100 text-emerald-800 border border-emerald-200";
+
+            return `
+              <tr class="border-b hover:bg-gray-50">
+                <td class="py-2.5 px-3">${i + 1}</td>
+                <td class="py-2.5 px-3 text-xs text-gray-500">${h.date}</td>
+                <td class="py-2.5 px-3 text-xs font-medium text-gray-600">${h.category || '-'}</td>
+                <td class="py-2.5 px-3 font-semibold text-gray-800">${h.items}</td>
+                <td class="py-2.5 px-3">${h.brand || '-'}</td>
+                <td class="py-2.5 px-3 font-bold">${h.quantity}</td>
+                <td class="py-2.5 px-3">${h.unit}</td>
+                <td class="py-2.5 px-3 text-center">
+                  <span class="px-2.5 py-1 rounded-full text-xs font-bold ${statusColor}">${h.status}</span>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-gray-400">Belum ada riwayat pengajuan.</td></tr>';
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-red-500">Gagal memuat riwayat pengajuan.</td></tr>';
+      }
+    }
+
+    // --- PENGELOLAAN BARANG RUSAK ---
+    function renderRusakTable() {
+      const tbody = document.getElementById('rusak-list-body');
+      if (!pendingRusakRequests.length) {
+        tbody.innerHTML = '<tr><td colspan="9" class="text-center py-4 text-gray-400">Belum ada barang rusak yang dipilih.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = pendingRusakRequests.map((item, idx) => {
+        const pricePerUnit = Number(item.price) || 0;
+        const total = pricePerUnit * Number(item.quantity);
+        return `
+          <tr class="border-b">
+            <td class="py-2.5 px-3">${idx + 1}</td>
+            <td class="py-2.5 px-3 font-semibold">${item.items}</td>
+            <td class="py-2.5 px-3">${item.brand && item.brand !== '-' ? item.brand : '-'}</td>
+            <td class="py-2.5 px-3 font-bold text-amber-600">${item.quantity}</td>
+            <td class="py-2.5 px-3">${item.unit}</td>
+            <td class="py-2.5 px-3">Rp ${pricePerUnit.toLocaleString('id-ID')}</td>
+            <td class="py-2.5 px-3 font-bold text-gray-900">Rp ${total.toLocaleString('id-ID')}</td>
+            <td class="py-2.5 px-3 text-gray-600">${item.keterangan}</td>
+            <td class="py-2.5 px-3"><button onclick="removeItemFromRusak(${idx})" class="text-red-600 text-xs font-semibold">Hapus</button></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function removeItemFromRusak(index) {
+      pendingRusakRequests.splice(index, 1);
+      renderRusakTable();
+    }
+
+    async function submitAllBarangRusak() {
+      const btn = document.getElementById('btn-submit-rusak');
+      if (!pendingRusakRequests.length) return showAlert("Daftar barang rusak masih kosong!", false);
+
+      btn.disabled = true;
+      btn.innerText = "Mengirim...";
+
+      try {
+        const payload = { action: 'submitBarangRusak', itemsList: pendingRusakRequests };
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+
+        if (result.success) {
+          showAlert(result.message, true);
+          pendingRusakRequests = [];
+          renderRusakTable();
+          loadAfkirHistory(); // Refresh tabel riwayat afkir
+        } else {
+          showAlert(result.message, false);
+        }
+      } catch (e) {
+        showAlert("Gagal mengirim pengajuan barang rusak.", false);
+      }
+      btn.disabled = false;
+      btn.innerText = "Kirim Pengajuan Barang Rusak";
+    }
+
+    async function loadAfkirHistory() {
+      const tbody = document.getElementById('afkir-history-list-body');
+      try {
+        const res = await fetch(`${API_URL}?action=getAfkirHistory`);
+        const textRes = await res.text();
+        const result = JSON.parse(textRes);
+
+        if (result.success && result.data.length > 0) {
+          tbody.innerHTML = result.data.map((h, i) => {
+            let statusColor = "bg-gray-100 text-gray-800";
+            const st = (h.status || '').toLowerCase();
+            if (st.includes('pending')) statusColor = "bg-amber-100 text-amber-800 border border-amber-200";
+            else if (st.includes('purchase')) statusColor = "bg-blue-100 text-blue-800 border border-blue-200";
+            else if (st.includes('receive')) statusColor = "bg-purple-100 text-purple-800 border border-purple-200";
+            else if (st.includes('delivered')) statusColor = "bg-emerald-100 text-emerald-800 border border-emerald-200";
+
+            return `
+              <tr class="border-b hover:bg-gray-50">
+                <td class="py-2.5 px-3">${i + 1}</td>
+                <td class="py-2.5 px-3 text-xs text-gray-500">${h.date}</td>
+                <td class="py-2.5 px-3 text-xs font-medium text-gray-600">${h.category || '-'}</td>
+                <td class="py-2.5 px-3 font-semibold text-gray-800">${h.items}</td>
+                <td class="py-2.5 px-3">${h.brand || '-'}</td>
+                <td class="py-2.5 px-3 font-bold">${h.quantity}</td>
+                <td class="py-2.5 px-3">${h.unit}</td>
+                <td class="py-2.5 px-3 font-semibold">Rp ${Number(h.total).toLocaleString('id-ID')}</td>
+                <td class="py-2.5 px-3 text-gray-600">${h.keterangan}</td>
+                <td class="py-2.5 px-3 text-center">
+                  <span class="px-2.5 py-1 rounded-full text-xs font-bold ${statusColor}">${h.status}</span>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="10" class="text-center py-4 text-gray-400">Belum ada riwayat pengajuan barang rusak.</td></tr>';
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="10" class="text-center py-4 text-red-500">Gagal memuat riwayat barang rusak.</td></tr>';
+      }
+    }
+
+    async function performSearch() {
+      const q = document.getElementById('search-query').value;
+      const resDiv = document.getElementById('search-result');
+      const btn = document.getElementById('btn-search');
+      if (!q) return;
+
+      btn.disabled = true;
+      resDiv.innerHTML = '<span class="text-gray-500">Mencari...</span>';
+
+      try {
+        const res = await fetch(`${API_URL}?action=searchStock&query=${encodeURIComponent(q)}`);
+        const result = await res.json();
+        
+        if (result.found) {
+          let html = '<div class="p-3 bg-green-100 text-green-900 border border-green-200 rounded-lg"><strong>Ditemukan di Stok:</strong><ul class="mt-1 list-disc list-inside">';
+          result.items.forEach(i => html += `<li>${i.items} (${i.brand}) - Stok: <strong>${i.quantity} ${i.unit}</strong></li>`);
+          resDiv.innerHTML = html + '</ul></div>';
+        } else {
+          resDiv.innerHTML = '<div class="p-3 bg-amber-100 text-amber-900 border border-amber-200 rounded-lg">Barang tidak ditemukan di stok. Anda dapat melanjutkan pengajuan di form atas.</div>';
+        }
+      } catch (e) {
+        resDiv.innerHTML = '<span class="text-red-500">Gagal mencari.</span>';
+      }
+      btn.disabled = false;
     }
   </script>
 </body>
